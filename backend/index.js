@@ -5,15 +5,40 @@ require('dotenv').config();
 const { OpenAI } = require("openai");
 const { analisarRoda } = require('./iaController');
 
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// =========================
+// CONFIGURAÇÃO DO OPENAI
+// =========================
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+// =========================
+// CORS CONFIGURADO
+// =========================
+const allowedOrigins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:5500",
+    "https://SEU-FRONTEND.netlify.app" // ⬅️ depois você troca pela URL real
+];
 
-// Middlewares
-app.use(cors());
+app.use(cors({
+    origin: function (origin, callback) {
+        // permite requisições sem origin (Postman, etc)
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        } else {
+            return callback(new Error("Não permitido pelo CORS"));
+        }
+    },
+    methods: ["GET", "POST"],
+    credentials: true
+}));
+
 app.use(express.json());
 
 // =========================
@@ -22,17 +47,22 @@ app.use(express.json());
 app.post('/api/analisar-roda', analisarRoda);
 
 // =========================
-// ROTA DE TESTE
+// ROTA DE TESTE (IMPORTANTE)
 // =========================
 app.get('/health', (req, res) => {
     res.json({ status: "Servidor ENOQUE online e operacional" });
 });
 
 // =========================
-// ROTA PARA GERAR PERGUNTAS DINÂMICAS
+// GERAR PERGUNTAS DINÂMICAS
 // =========================
 app.post('/api/gerar-perguntas', async (req, res) => {
     const { modalidades } = req.body;
+
+    // VALIDAÇÃO
+    if (!modalidades || !Array.isArray(modalidades)) {
+        return res.status(400).json({ error: "Modalidades inválidas." });
+    }
 
     const prompt = `
 Você é um consultor de negócios especialista no Método Enoque.
@@ -68,7 +98,7 @@ Retorne APENAS um JSON válido neste formato:
 
         let content = completion.choices[0].message.content.trim();
 
-        // Remove markdown se vier com ```json
+        // Limpeza de markdown
         content = content
             .replace(/```json/g, '')
             .replace(/```/g, '')

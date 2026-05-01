@@ -1,0 +1,477 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background: radial-gradient(circle at top left, #132238, #08111f 55%, #050a12 100%);
+  color:#ffffff;
+  overflow-x:hidden;
+}
+
+.bg-effects{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0,224,255,0.08), transparent 30%),
+    radial-gradient(circle at 80% 30%, rgba(0,255,170,0.06), transparent 30%);
+  z-index:0;
+}
+
+.content{
+  position:relative;
+  z-index:1;
+  padding:40px 30px 120px;
+  max-width:1500px;
+  margin:auto;
+}
+
+.top-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:30px;
+}
+
+.top-header h1{
+  font-size:2.2rem;
+  color:#ffffff;
+  margin-bottom:8px;
+  text-shadow:0 0 20px rgba(0,224,255,0.25);
+}
+
+#user-email{
+  color:#9cc7ff;
+  font-size:15px;
+}
+
+.header-badge{
+  padding:10px 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#00e0ff,#00d98b);
+  color:#04111d;
+  font-weight:700;
+  font-size:13px;
+  box-shadow:0 0 20px rgba(0,224,255,0.25);
+}
+
+.dashboard-layout{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  gap:24px;
+  align-items:start;
+}
+
+.left-panel{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.mini-card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  padding:20px;
+  border-radius:22px;
+  backdrop-filter: blur(12px);
+  box-shadow:0 8px 25px rgba(0,0,0,0.25);
+}
+
+.mini-card h3{
+  color:#9cc7ff;
+  font-size:0.95rem;
+  margin-bottom:10px;
+}
+
+.mini-card p{
+  color:#ffffff;
+  font-size:1.15rem;
+  font-weight:700;
+}
+
+.chart-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:28px;
+  padding:24px;
+  backdrop-filter: blur(12px);
+  box-shadow:0 12px 30px rgba(0,0,0,0.30);
+}
+
+.chart-title{
+  margin-bottom:20px;
+}
+
+.chart-title h2{
+  color:#ffffff;
+  font-size:1.4rem;
+}
+
+.chart-title span{
+  color:#8ca6c7;
+  font-size:14px;
+}
+
+.chart-container{
+  width:100%;
+  min-height:55vh;
+}
+
+.chart-container canvas{
+  width:100% !important;
+  height:100% !important;
+}
+
+.bottom-dock{
+  position:fixed;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:95%;
+  max-width:760px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  padding:14px;
+  border-radius:24px;
+  background:rgba(10,20,35,0.75);
+  backdrop-filter: blur(18px);
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 12px 35px rgba(0,0,0,0.35);
+  z-index:9999;
+  pointer-events:auto;
+}
+
+.dock-item{
+  text-decoration:none;
+  border:none;
+  cursor:pointer;
+  padding:12px 18px;
+  border-radius:14px;
+  font-size:14px;
+  font-weight:600;
+  color:#d7e8ff;
+  background:transparent;
+  transition:all 0.3s ease;
+}
+
+.dock-item:hover,
+.dock-item.active{
+  background:linear-gradient(135deg,#00e0ff,#00d98b);
+  color:#04111d;
+  box-shadow:0 0 18px rgba(0,224,255,0.25);
+}
+
+.logout:hover{
+  background:linear-gradient(135deg,#ff6b6b,#ef4444);
+  color:#fff;
+}
+
+.dock-item {
+    cursor: pointer; /* Isso faz o mouse mudar de forma */
+    transition: all 0.3s ease;
+}
+
+.dock-item:hover {
+    filter: brightness(1.2); /* Dá um brilho ao passar o mouse */
+}
+
+/* --- ESTILIZAÇÃO DO SLIDER (MINHA ROTA) --- */
+
+/* 1. Remove o estilo padrão do navegador */
+.enoque-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    outline: none;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+/* 2. Estilo da "Bolinha" para Chrome, Edge e Safari */
+.enoque-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #00e0ff;
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(0, 224, 255, 0.8);
+    border: 2px solid #ffffff;
+    transition: 0.2s ease-in-out;
+}
+
+/* 3. Estilo da "Bolinha" para Firefox */
+.enoque-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #00e0ff;
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(0, 224, 255, 0.8);
+    border: 2px solid #ffffff;
+    cursor: pointer;
+}
+
+/* 4. Efeito de Hover na bolinha */
+.enoque-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: #00d98b; /* Muda para o verde Enoque no hover */
+}
+
+/* SUBTÍTULO PADRÃO */
+.subtitle{
+  color:#8ca6c7;
+  font-size:14px;
+  margin-top:6px;
+  letter-spacing:0.3px;
+}
+
+/* BOTÃO DE VOLTAR */
+.back-btn{
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  transition:all 0.3s ease;
+}
+
+.back-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 18px rgba(0,224,255,0.20);
+}
+
+/* WRAPPER DOS DETALHES */
+.details-wrapper{
+  max-width:950px;
+  margin:0 auto;
+  padding-top:10px;
+}
+
+/* CARD PRINCIPAL */
+.detail-card{
+  position:relative;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:28px;
+  padding:28px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 15px 35px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+  overflow:hidden;
+}
+
+/* GLOW DECORATIVO */
+.detail-card::before{
+  content:"";
+  position:absolute;
+  top:-80px;
+  right:-80px;
+  width:220px;
+  height:220px;
+  background:radial-gradient(circle, rgba(0,224,255,0.08), transparent 70%);
+  pointer-events:none;
+}
+
+/* CABEÇALHO INTERNO */
+.detail-header{
+  margin-bottom:24px;
+  display:flex;
+  align-items:center;
+}
+
+/* BADGE */
+.detail-badge{
+  display:inline-flex;
+  align-items:center;
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.8px;
+  color:#04111d;
+  background:linear-gradient(135deg,#00e0ff,#00d98b);
+  box-shadow:0 0 18px rgba(0,224,255,0.20);
+}
+
+/* CONTEÚDO */
+.detail-content{
+  position:relative;
+  z-index:2;
+}
+
+.detail-content p{
+  color:#d7e8ff;
+  font-size:1rem;
+  line-height:1.9;
+  font-weight:400;
+  white-space:pre-line;
+}
+
+/* EFEITO HOVER PREMIUM */
+.detail-card:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.32),
+    0 0 25px rgba(0,224,255,0.06);
+  transition:all 0.35s ease;
+}
+
+/* WRAPPER GERAL */
+.plan-wrapper{
+  max-width:1100px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+
+/* CARD DE INTRODUÇÃO */
+.plan-header-card{
+  position:relative;
+  padding:28px;
+  border-radius:28px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 15px 35px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+  overflow:hidden;
+}
+
+.plan-header-card::before{
+  content:"";
+  position:absolute;
+  top:-80px;
+  right:-80px;
+  width:220px;
+  height:220px;
+  background:radial-gradient(circle, rgba(0,224,255,0.08), transparent 70%);
+  pointer-events:none;
+}
+
+.plan-header-card h2{
+  font-size:1.6rem;
+  color:#ffffff;
+  margin-top:12px;
+  margin-bottom:10px;
+}
+
+.plan-header-card p{
+  color:#9cb8d6;
+  line-height:1.7;
+  font-size:0.98rem;
+  max-width:700px;
+}
+
+/* BADGE SUPERIOR */
+.plan-badge{
+  display:inline-flex;
+  align-items:center;
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.8px;
+  color:#04111d;
+  background:linear-gradient(135deg,#00e0ff,#00d98b);
+  box-shadow:0 0 18px rgba(0,224,255,0.18);
+}
+
+/* GRID DAS MISSÕES */
+.plan-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:20px;
+}
+
+/* CARD DE LOADING */
+.plan-loading-card{
+  grid-column:1/-1;
+  min-height:180px;
+  border-radius:24px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:18px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:0 15px 30px rgba(0,0,0,0.25);
+}
+
+.plan-loading-card p{
+  color:#9cc7ff;
+  font-size:15px;
+}
+
+/* LOADER ANIMADO */
+.loader-ring{
+  width:42px;
+  height:42px;
+  border:4px solid rgba(255,255,255,0.08);
+  border-top:4px solid #00e0ff;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  from{ transform:rotate(0deg); }
+  to{ transform:rotate(360deg); }
+}
+
+/* CARD INDIVIDUAL DE MISSÃO */
+.plan-mission-card{
+  position:relative;
+  padding:22px;
+  border-radius:24px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 12px 25px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+  transition:all 0.35s ease;
+  overflow:hidden;
+}
+
+.plan-mission-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:3px;
+  background:linear-gradient(90deg,#00e0ff,#00d98b);
+}
+
+.plan-mission-card:hover{
+  transform:translateY(-4px);
+  box-shadow:
+    0 20px 35px rgba(0,0,0,0.32),
+    0 0 22px rgba(0,224,255,0.06);
+}
+
+.plan-mission-card h3{
+  color:#ffffff;
+  font-size:1.05rem;
+  margin-bottom:10px;
+}
+
+.plan-mission-card p{
+  color:#9cb8d6;
+  font-size:0.95rem;
+  line-height:1.6;
+}

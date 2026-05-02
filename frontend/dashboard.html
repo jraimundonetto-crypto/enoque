@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ENOQUE - Dashboard</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div class="bg-effects"></div>
+
+  <main class="content">
+
+    <header class="top-header">
+      <div>
+        <h1>Bem-vindo(a) de volta</h1>
+        <p id="user-email">Carregando e-mail...</p>
+      </div>
+      <div class="header-badge">IMERSÃO ENOQUE</div>
+    </header>
+
+    <section class="dashboard-layout">
+
+      <aside class="left-panel">
+    <div class="mini-card">
+        <h3 style="margin-bottom: 15px; color: #00e0ff;">Ajustar Diagnóstico</h3>
+        <div id="controls-container" style="display: flex; flex-direction: column; gap: 10px;">
+            </div>
+        <button onclick="gerarAnalise()" id="btn-analisar" style="width: 100%; margin-top: 20px; padding: 12px; background: linear-gradient(135deg, #00e0ff, #27AE60); border: none; border-radius: 8px; color: #fff; font-weight: bold; cursor: pointer; transition: 0.3s;">
+            Analisar com IA
+        </button>
+    </div>
+
+    <div class="mini-card" id="resultado-ia" style="display: none; border-top: 2px solid #00e0ff; margin-top: 20px;">
+        <h3 style="color: #00e0ff; font-size: 14px;">Feedback do Mentor</h3>
+        <p id="analise-texto" style="font-size: 13px; line-height: 1.4; color: #d7e8ff; margin-top: 10px;"></p>
+    </div>
+</aside>
+
+      <section class="chart-panel">
+        <div class="chart-card">
+          <div class="chart-title">
+            <h2>Roda Enoque</h2>
+            <span>Diagnóstico Estratégico</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="enoqueChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+    </section>
+
+  </main>
+
+  <nav class="bottom-dock">
+    <a href="dashboard.html" class="dock-item active">Início</a>
+    <a href="minha-roda.html" class="dock-item">Minha Roda</a> <a href="plano-acao.html" class="dock-item">Plano de Ação</a>
+    <a href="javascript:void(0)" onclick="handleLogout(); return false;" class="dock-item logout">Sair</a>
+</nav>
+
+ <script src="./app.js"></script>
+
+</body>
+</html>

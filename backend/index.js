@@ -9,36 +9,20 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // =========================
-// CONFIGURAÇÃO DO OPENAI
+// OPENAI
 // =========================
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
 // =========================
-// CORS CONFIGURADO
+// 🔥 CORS LIBERADO (TEMPORÁRIO PRA FUNCIONAR)
 // =========================
-const allowedOrigins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:5500",
-    "https://SEU-FRONTEND.netlify.app" // ⬅️ depois você troca pela URL real
-];
+app.use(cors());
 
-app.use(cors({
-    origin: function (origin, callback) {
-        // permite requisições sem origin (Postman, etc)
-        if (!origin) return callback(null, true);
-
-        if (allowedOrigins.includes(origin)) {
-            return callback(null, true);
-        } else {
-            return callback(new Error("Não permitido pelo CORS"));
-        }
-    },
-    methods: ["GET", "POST"],
-    credentials: true
-}));
-
+// =========================
+// MIDDLEWARE
+// =========================
 app.use(express.json());
 
 // =========================
@@ -47,21 +31,23 @@ app.use(express.json());
 app.post('/api/analisar-roda', analisarRoda);
 
 // =========================
-// ROTA DE TESTE (IMPORTANTE)
+// ROTA DE TESTE
 // =========================
 app.get('/health', (req, res) => {
     res.json({ status: "Servidor ENOQUE online e operacional" });
 });
 
 // =========================
-// GERAR PERGUNTAS DINÂMICAS
+// GERAR PERGUNTAS
 // =========================
 app.post('/api/gerar-perguntas', async (req, res) => {
     const { modalidades } = req.body;
 
-    // VALIDAÇÃO
+    // 🔥 VALIDAÇÃO
     if (!modalidades || !Array.isArray(modalidades)) {
-        return res.status(400).json({ error: "Modalidades inválidas." });
+        return res.status(400).json({
+            error: "Modalidades inválidas"
+        });
     }
 
     const prompt = `
@@ -69,13 +55,6 @@ Você é um consultor de negócios especialista no Método Enoque.
 
 Gere 5 perguntas estratégicas diferentes para cada uma destas modalidades:
 ${modalidades.join(', ')}
-
-As perguntas devem ser:
-- claras
-- estratégicas
-- fáceis para pequenos e médios empreendedores entenderem
-- diferentes entre si
-- profundas mas objetivas
 
 Retorne APENAS um JSON válido neste formato:
 
@@ -98,24 +77,35 @@ Retorne APENAS um JSON válido neste formato:
 
         let content = completion.choices[0].message.content.trim();
 
-        // Limpeza de markdown
+        // limpa markdown
         content = content
             .replace(/```json/g, '')
             .replace(/```/g, '')
             .trim();
 
-        const perguntas = JSON.parse(content);
+        let perguntas;
+
+        try {
+            perguntas = JSON.parse(content);
+        } catch (e) {
+            console.error("❌ ERRO AO PARSEAR JSON:", content);
+            return res.status(500).json({
+                error: "Resposta inválida da IA"
+            });
+        }
 
         res.json({ perguntas });
 
     } catch (error) {
-        console.error("Erro ao gerar perguntas:", error.message);
-        res.status(500).json({ error: "Falha ao gerar perguntas inteligentes." });
+        console.error("🔥 ERRO COMPLETO:", error);
+        res.status(500).json({
+            error: "Falha ao gerar perguntas inteligentes."
+        });
     }
 });
 
 // =========================
-// INICIAR SERVIDOR
+// START
 // =========================
 app.listen(PORT, () => {
     console.log(`### SERVIDOR ENOQUE RODANDO NA PORTA ${PORT} ###`);
